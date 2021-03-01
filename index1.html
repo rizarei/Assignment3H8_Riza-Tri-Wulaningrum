@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Covid 19</title>
+</head>
+<body>
+    <h1>DATA COVID 19 INDONESIA</h1>
+            
+    Positif : <span id="data-positif"></span> <br>
+    Sembuh : <span id="data-sembuh"></span> <br>
+    Meninggal : <span id="data-meninggal"></span><br>
+    
+    <table border="1" id="table-provinsi">
+        <tr><th>Provinsi</th><th>Positif</th><th>Sembuh</th><th>Meninggal</th></tr>
+    </table>
+
+<script>
+ var userTable = document.getElementById("table-provinsi");
+
+ sumHasilPosi = 0;
+ sumHasilSemb = 0;
+ sumHasilMeni = 0;
+ 
+ fetch("https://indonesia-covid19.mathdro.id/api/provinsi")
+ .then(response=> response.json())
+ .then(resp =>{
+    for (var i=0; i < resp.data.length; i++){
+            var row = userTable.insertRow();
+            row.insertCell(0).innerHTML = resp.data[i].provinsi;
+            row.insertCell(1).innerHTML = resp.data[i].kasusPosi;
+            row.insertCell(2).innerHTML = resp.data[i].kasusSemb;
+            row.insertCell(3).innerHTML = resp.data[i].kasusMeni;
+
+            sumHasilPosi += resp.data[i].kasusPosi;
+            sumHasilSemb += resp.data[i].kasusSemb;
+            sumHasilMeni += resp.data[i].kasusMeni;
+        }
+        console.log(sumHasilPosi)
+        console.log(sumHasilSemb)
+        console.log(sumHasilMeni)
+    })
+    .catch(err =>{
+        console.log(err)
+ }
+       
+    )
+</script>
+
+</body>
+</html>
